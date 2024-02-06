@@ -1,0 +1,11 @@
+C:\dev\Stories\Stories.Services\bin\Debug\net8.0\Stories.Services.deps.json
+C:\dev\Stories\Stories.Services\bin\Debug\net8.0\Stories.Services.dll
+C:\dev\Stories\Stories.Services\bin\Debug\net8.0\Stories.Services.pdb
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.AssemblyInfoInputs.cache
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.AssemblyInfo.cs
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.csproj.CoreCompileInputs.cache
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.dll
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\refint\Stories.Services.dll
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.pdb
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\ref\Stories.Services.dll
