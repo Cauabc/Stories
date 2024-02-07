@@ -36,4 +36,29 @@ public class AccountServiceTest
 
         Assert.Empty(result);
     }
+
+    [Fact]
+    public void Post_ValidData_ReturnsGuid()
+    {
+        _service.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>())).Returns(Guid.NewGuid());
+
+        var result = _service.Object.Create("Test", "Test");
+
+        _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+        Assert.IsType<Guid>(result);
+    }
+
+    [Fact]
+    public void Post_InvalidData_ReturnsEmptyGuid()
+    {
+        _service.Setup(s => s.Create(null, "Jacaré")).Returns(Guid.Empty);
+
+        var result = _service.Object.Create(null, "Jacaré");
+
+        _service.Verify(s => s.Create(null, "Jacaré"), Times.Once());
+
+        Assert.Equal(Guid.Empty, result);
+    }
+
 }

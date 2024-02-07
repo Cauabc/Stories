@@ -39,4 +39,38 @@ public class AccountsControllerTest
 
         Assert.IsType<NoContentResult>(result);
     }
+
+    [Fact]
+    public void Post_ValidData_ReturnsCreatedAtAction()
+    {
+        _service.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>())).Returns(Guid.NewGuid());
+
+        var result = _controller.Post("name", "email");
+
+        _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+        Assert.IsType<CreatedAtActionResult>(result);
+    }
+
+    [Fact]
+    public void Post_InvalidData_ReturnsBadRequest()
+    {
+        _service.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>())).Returns(Guid.Empty);
+
+        var result = _controller.Post("name", "email");
+
+        _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+        Assert.IsType<BadRequestResult>(result);
+    }
+
+    [Fact]
+    public void Post_EmptyData_ReturnsBadRequest()
+    {
+        var result = _controller.Post("", "");
+
+        _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>()), Times.Never());
+
+        Assert.IsType<BadRequestResult>(result);
+    }
 }
