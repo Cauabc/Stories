@@ -20,6 +20,19 @@ public class StoryService(ApplicationDataContext context) : IStoryService
         return storyToCreate.Id;
     }
 
+    public bool Delete(Guid id)
+    {
+        var itemToDelete = _context.Stories.FirstOrDefault(x => x.Id == id);
+
+        if (itemToDelete == null)
+            return false;
+
+        _context.Stories.Remove(itemToDelete);
+        _context.SaveChanges();
+
+        return true;
+    }
+
     public IEnumerable<StoryDTO> GetAll()
     {
         return _context.Stories.Select(s => new StoryDTO { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Votes.Count(v => v.Upvote && v.StoryId == s.Id), Dislikes = s.Votes.Count(v => v.Upvote == false && v.StoryId == s.Id) }).ToList();

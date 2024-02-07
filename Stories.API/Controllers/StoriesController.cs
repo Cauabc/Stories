@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Stories.API.Application.ViewModels;
 using Stories.Services.Services.Story;
@@ -15,7 +16,6 @@ namespace Stories.API.Controllers
         private readonly IStoryService _service = service;
 
         // PUT: api/Stories/{id}
-        // DELETE: api/Stories/{id}
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StoryViewModel>),(int)HttpStatusCode.OK)]
@@ -23,14 +23,14 @@ namespace Stories.API.Controllers
         public IActionResult Get()
         {
             var result = _service.GetAll().Select(s => new StoryViewModel { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Likes, Dislikes = s.Dislikes});
-
+            
             if (result.Any())
                 return Ok(result);
 
             return NoContent();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(StoryViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public IActionResult GetById(Guid id)
@@ -59,6 +59,17 @@ namespace Stories.API.Controllers
                 return BadRequest();
 
             return CreatedAtAction(nameof(Get), new { id = resultId }, new StoryViewModel { Id = resultId, Title = title, Description = description, Department = department });
+        }
+
+        [HttpDelete("{id:guid}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult Delete(Guid id)
+        {
+            if (_service.Delete(id))
+                return Ok();
+
+            return NotFound();
         }
     }
 }

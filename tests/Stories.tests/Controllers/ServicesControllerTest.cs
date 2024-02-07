@@ -100,5 +100,30 @@ namespace Stories.tests.Controllers
 
             Assert.IsType<BadRequestResult>(result);
         }
+
+        [Fact]
+        public void Delete_ValidId_ReturnsOk()
+        {
+            _service.Setup(s => s.Delete(It.IsAny<Guid>())).Returns(true);
+
+            var result = _controller.Delete(Guid.NewGuid());
+
+            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once);
+
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Delete_InvalidId_ReturnsNotFound()
+        {
+            _service.Setup(s => s.Delete(It.IsAny<Guid>())).Returns(false);
+
+            var result = _controller.Delete(Guid.NewGuid());
+
+            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once);
+
+            Assert.IsType<NotFoundResult>(result);
+        }
+
     }
 }

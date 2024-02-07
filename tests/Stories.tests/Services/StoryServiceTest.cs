@@ -85,6 +85,28 @@ namespace Stories.tests.Services
             Assert.Equal(Guid.Empty, result);
         }
 
+        [Fact]
+        public void Delete_ValidData_ReturnsTrue()
+        {
+            _service.Setup(s => s.Delete(It.IsAny<Guid>())).Returns(true);
 
+            var result = _service.Object.Delete(Guid.NewGuid());
+
+            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once());
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Delete_InvalidData_ReturnsFalse()
+        {
+            _service.Setup(s => s.Delete(It.IsAny<Guid>())).Returns(false);
+
+            var result = _service.Object.Delete(Guid.NewGuid());
+
+            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once());
+
+            Assert.False(result);
+        }
     }
 }
