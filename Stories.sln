@@ -3,19 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stories.API", "Stories.API\Stories.API.csproj", "{3C8FC7BC-3674-44D0-AF7D-FF44EB1DA5DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stories.API", "Stories.API\Stories.API.csproj", "{3C8FC7BC-3674-44D0-AF7D-FF44EB1DA5DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stories.Infrastructure", "Stories.Infrastructure\Stories.Infrastructure.csproj", "{749E5EA0-D185-413D-AD58-E2C0DE237D7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stories.Infrastructure", "Stories.Infrastructure\Stories.Infrastructure.csproj", "{749E5EA0-D185-413D-AD58-E2C0DE237D7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stories.Services", "Stories.Services\Stories.Services.csproj", "{B258C23A-1ED6-4AC4-9D99-2A4C7CA6B048}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stories.Services", "Stories.Services\Stories.Services.csproj", "{B258C23A-1ED6-4AC4-9D99-2A4C7CA6B048}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0475262D-A9AD-454A-BBFB-8A2831F7A9F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stories.tests", "tests\Stories.tests\Stories.tests.csproj", "{9E8D6B38-9CD0-4DE6-8899-D2E4F55E472B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3C8FC7BC-3674-44D0-AF7D-FF44EB1DA5DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +31,15 @@ Global
 		{B258C23A-1ED6-4AC4-9D99-2A4C7CA6B048}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B258C23A-1ED6-4AC4-9D99-2A4C7CA6B048}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B258C23A-1ED6-4AC4-9D99-2A4C7CA6B048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E8D6B38-9CD0-4DE6-8899-D2E4F55E472B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E8D6B38-9CD0-4DE6-8899-D2E4F55E472B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E8D6B38-9CD0-4DE6-8899-D2E4F55E472B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E8D6B38-9CD0-4DE6-8899-D2E4F55E472B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E8D6B38-9CD0-4DE6-8899-D2E4F55E472B} = {0475262D-A9AD-454A-BBFB-8A2831F7A9F7}
 	EndGlobalSection
 EndGlobal
