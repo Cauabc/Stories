@@ -41,7 +41,7 @@ public class AccountsControllerTest
     }
 
     [Fact]
-    public void Post_ValidData_ReturnsCreatedAtAction()
+    public void Create_ValidData_ReturnsCreatedAtAction()
     {
         _service.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>())).Returns(Guid.NewGuid());
 
@@ -53,7 +53,7 @@ public class AccountsControllerTest
     }
 
     [Fact]
-    public void Post_InvalidData_ReturnsBadRequest()
+    public void Create_InvalidData_ReturnsBadRequest()
     {
         _service.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>())).Returns(Guid.Empty);
 
@@ -65,7 +65,7 @@ public class AccountsControllerTest
     }
 
     [Fact]
-    public void Post_EmptyData_ReturnsBadRequest()
+    public void Create_EmptyData_ReturnsBadRequest()
     {
         var result = _controller.Post("", "");
 
