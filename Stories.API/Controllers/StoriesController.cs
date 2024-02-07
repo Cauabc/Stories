@@ -14,7 +14,6 @@ namespace Stories.API.Controllers
     {
         private readonly IStoryService _service = service;
 
-        // POST: api/Stories
         // PUT: api/Stories/{id}
         // DELETE: api/Stories/{id}
 
@@ -44,6 +43,22 @@ namespace Stories.API.Controllers
             var response = new StoryViewModel { Id = result.Id, Title = result.Title, Description = result.Description, Department = result.Department, Likes = result.Likes, Dislikes = result.Dislikes };
 
             return Ok(response);
+        }
+
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult Post(string title, string description, string department)
+        {
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(department))
+                return BadRequest();
+
+            var resultId = _service.Create(title, description, department);
+
+            if (resultId == Guid.Empty)
+                return BadRequest();
+
+            return CreatedAtAction(nameof(Get), new { id = resultId }, new StoryViewModel { Id = resultId, Title = title, Description = description, Department = department });
         }
     }
 }
