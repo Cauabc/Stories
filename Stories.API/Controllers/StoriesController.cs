@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Stories.API.Application.ViewModels;
 using Stories.Services.Services.Story;
 using System.Net;
-using System.Net.Sockets;
 
 namespace Stories.API.Controllers
 {
@@ -14,8 +10,6 @@ namespace Stories.API.Controllers
     public class StoriesController(IStoryService service) : ControllerBase
     {
         private readonly IStoryService _service = service;
-
-        // PUT: api/Stories/{id}
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StoryViewModel>),(int)HttpStatusCode.OK)]
@@ -67,6 +61,21 @@ namespace Stories.API.Controllers
         public IActionResult Delete(Guid id)
         {
             if (_service.Delete(id))
+                return Ok();
+
+            return NotFound();
+        }
+
+        [HttpPut("{id:guid}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult Put(Guid id, string title, string description, string department)
+        {
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(department))
+                return BadRequest();
+
+            if (_service.Update(id, title, description, department))
                 return Ok();
 
             return NotFound();

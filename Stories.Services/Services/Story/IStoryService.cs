@@ -8,4 +8,5 @@ public interface IStoryService
     StoryDTO GetById(Guid id);
     Guid Create(string title, string description, string department);
     bool Delete(Guid id);
+    bool Update(Guid id, string title, string description, string department);
 }

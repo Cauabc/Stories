@@ -42,4 +42,22 @@ public class StoryService(ApplicationDataContext context) : IStoryService
     {
         return _context.Stories.Select(s => new StoryDTO { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Votes.Count(v => v.Upvote && v.StoryId == s.Id), Dislikes = s.Votes.Count(v => v.Upvote == false && v.StoryId == s.Id) }).FirstOrDefault(s => s.Id == id);
     }
+
+    public bool Update(Guid id, string title, string description, string department)
+    {
+        var itemToUpdate = _context.Stories.FirstOrDefault(x => x.Id == id);
+
+        if (itemToUpdate == null)
+            return false;
+
+        itemToUpdate.Title = title;
+        itemToUpdate.Description = description;
+        itemToUpdate.Department = department;
+
+        _context.Stories.Update(itemToUpdate);
+        _context.SaveChanges();
+
+        return true;
+
+    }
 }

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Stories.Infrastructure.Data;
 using Stories.Services.Services.Account;
 using Stories.Services.Services.Story;
+using Stories.Services.Services.Votes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDataContext>(opt =>
 });
 builder.Services.AddScoped<IStoryService, StoryService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IVoteService, VoteService>();
 
 var app = builder.Build();
 

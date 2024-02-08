@@ -23,7 +23,7 @@ namespace Stories.tests.Controllers
 
             var result = _controller.Get();
 
-            _service.Verify(s => s.GetAll(), Times.Once);
+            _service.Verify(s => s.GetAll(), Times.Once());
 
             Assert.IsType<OkObjectResult>(result);
         }
@@ -35,7 +35,7 @@ namespace Stories.tests.Controllers
 
             var result = _controller.Get();
 
-            _service.Verify(s => s.GetAll(), Times.Once);
+            _service.Verify(s => s.GetAll(), Times.Once());
 
             Assert.IsType<NoContentResult>(result);
         }
@@ -48,7 +48,7 @@ namespace Stories.tests.Controllers
 
             var result = _controller.GetById(mockId);
 
-            _service.Verify(s => s.GetById(mockId), Times.Once);
+            _service.Verify(s => s.GetById(mockId), Times.Once());
 
             Assert.IsType<OkObjectResult>(result);
         }
@@ -62,7 +62,7 @@ namespace Stories.tests.Controllers
 
             var result = _controller.GetById(mockId);
 
-            _service.Verify(s => s.GetById(mockId), Times.Once);
+            _service.Verify(s => s.GetById(mockId), Times.Once());
 
             Assert.IsType<NotFoundResult>(result);
         }
@@ -74,7 +74,7 @@ namespace Stories.tests.Controllers
 
             var result = _controller.Post("Title", "Description", "Department");
 
-            _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
 
             Assert.IsType<CreatedAtActionResult>(result);       
         }
@@ -96,7 +96,7 @@ namespace Stories.tests.Controllers
 
             var result = _controller.Post("Title", "Description", "Department");
 
-            _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+            _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
 
             Assert.IsType<BadRequestResult>(result);
         }
@@ -108,7 +108,7 @@ namespace Stories.tests.Controllers
 
             var result = _controller.Delete(Guid.NewGuid());
 
-            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once);
+            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once());
 
             Assert.IsType<OkResult>(result);
         }
@@ -120,10 +120,43 @@ namespace Stories.tests.Controllers
 
             var result = _controller.Delete(Guid.NewGuid());
 
-            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once);
+            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once());
 
             Assert.IsType<NotFoundResult>(result);
         }
 
+        [Fact]
+        public void Update_ValidData_ReturnsOk()
+        {
+            _service.Setup(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+
+            var result = _controller.Put(Guid.NewGuid(), "Title", "Description", "Department");
+
+            _service.Verify(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Update_InvalidData_ReturnsNotFound()
+        {
+            _service.Setup(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(false);
+
+            var result = _controller.Put(Guid.NewGuid(), "Title", "Description", "Department");
+
+            _service.Verify(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public void Update_EmptyData_ReturnsBadRequest()
+        {
+            var result = _controller.Put(Guid.NewGuid(), "", "", "");
+
+            _service.Verify(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never());
+
+            Assert.IsType<BadRequestResult>(result);
+        }
     }
 }

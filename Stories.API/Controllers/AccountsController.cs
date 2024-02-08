@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Stories.API.Application.ViewModels;
 using Stories.Services.Services.Account;
 using System.Net;
@@ -35,10 +34,10 @@ namespace Stories.API.Controllers
 
             var account = _service.Create(name, email);
 
-            if (account != Guid.Empty)
-                return CreatedAtAction(nameof(Get), new { id = account }, new AccountViewModel { Id = account, Name = name, Email = email });
-
-            return BadRequest();
+            if (account == Guid.Empty)
+                return BadRequest();
+            
+            return CreatedAtAction(nameof(Get), new { id = account }, new AccountViewModel { Id = account, Name = name, Email = email });
         }
     }
 }
