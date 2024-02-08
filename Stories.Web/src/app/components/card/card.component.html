@@ -1,0 +1,9 @@
+<div class="card">
+    <h1 class="cardTitle">{{storyTitle}}</h1>
+    <p class="cardDescription">{{storyDescription}}</p>
+    <p><small class="cardDepartment">Departamento: {{storyDepartment}}</small></p>
+    <button mat-mini-fab (click)="createVote(true)"><mat-icon class="thumbUp">thumb_up</mat-icon></button>
+    <small class="likesCount">{{storyLikes}}</small>
+    <button mat-mini-fab color="accent" (click)="createVote(false)"><mat-icon color="warn">thumb_down</mat-icon></button>
+    <small class="dislikesCount">{{storyDislikes}}</small>
+</div>

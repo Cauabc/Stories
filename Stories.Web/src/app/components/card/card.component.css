@@ -1,0 +1,36 @@
+.card{
+    background-color: rgb(253, 234, 65);
+    width: clamp(50px, 24vw, 300px);
+    height: clamp(100px, 35vh, 300px);
+    margin-bottom: 1em;
+    border-radius: 7px;
+}
+
+h1.cardTitle{
+    padding-top: 10px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+p{
+    padding: 0 10px;
+    word-wrap: break-word;
+}
+
+.thumbUp{
+    color: green;
+}
+
+button{
+    margin: 40px 15px;
+}
+
+.likesCount{
+    color: green;
+    font-weight: bold;
+}
+
+.dislikesCount{
+    color: red;
+    font-weight: bold;
+}

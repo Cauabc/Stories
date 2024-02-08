@@ -1,0 +1,21 @@
+<main>
+    <div class="userOption">
+        <h1>Escolha um usuário: </h1>
+        <mat-form-field>
+            <mat-label>Escolha o usuário</mat-label>
+            <mat-select [(ngModel)]="selectedValue" name="user">
+                @for (user of userData; track user) {
+                    <mat-option [value]="user.id">{{user.name}}</mat-option>
+                  }
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="cardGroup">
+        @for (story of storyData; track story.id) {
+            <app-card [storyTitle]="story.title" [storyDescription]="story.description" [storyDepartment]="story.department" [userId]="selectedValue" [storyId]="story.id" [storyLikes]="story.likes" [storyDislikes]="story.dislikes"></app-card>
+        }
+    </div>
+    <div class="footer">
+        <button mat-fab color="primary" (click)="openDialog('0ms', '0ms')"><mat-icon>add</mat-icon></button>
+    </div>
+</main>
