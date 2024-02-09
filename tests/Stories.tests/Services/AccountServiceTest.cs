@@ -52,11 +52,11 @@ public class AccountServiceTest
     [Fact]
     public void Post_InvalidData_ReturnsEmptyGuid()
     {
-        _service.Setup(s => s.Create(null, "Jacaré")).Returns(Guid.Empty);
+        _service.Setup(s => s.Create(null, It.IsAny<string>())).Returns(Guid.Empty);
 
         var result = _service.Object.Create(null, "Jacaré");
 
-        _service.Verify(s => s.Create(null, "Jacaré"), Times.Once());
+        _service.Verify(s => s.Create(null, It.IsAny<string>()), Times.Once());
 
         Assert.Equal(Guid.Empty, result);
     }

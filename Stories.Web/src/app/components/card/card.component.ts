@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClient } from '@angular/common/http';
-import { VoteService } from '../../services/vote.service';
+import { StoryService } from '../../services/story.service';
+import { Vote } from '../../models/vote/vote';
 
 @Component({
   selector: 'app-card',
@@ -21,16 +21,15 @@ export class CardComponent {
   @Input() userId: string = '';
 
 
-
-  constructor(private voteService: VoteService){}
+  constructor(private storyService: StoryService){}
 
   createVote(upvote: boolean){
     if (this.userId === ''){
       alert('Por favor, escolha um usuário.');
       return;
     }
-
-    this.voteService.postVotes(this.userId, this.storyId, upvote);
+    const newVote: Vote = new Vote(this.userId, this.storyId, upvote);
+    this.storyService.postVotes(newVote);
   }
 
 }

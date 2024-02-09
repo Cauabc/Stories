@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CardComponent } from '../components/card/card.component';
@@ -32,7 +32,14 @@ interface Story{
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+
+  ngOnInit(): void {
+    this.storyService.stories$.subscribe((stories: any) => {
+      this.storyData = stories;
+    })
+  }
+
   userData: User[] = [];
   storyData: Story[] = [];
   selectedValue: string = '';
@@ -42,9 +49,6 @@ export class HomeComponent {
       this.userData = users;
     });
 
-    this.storyService.getStories().subscribe((stories: any) => {
-      this.storyData = stories;
-    });
   }
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {

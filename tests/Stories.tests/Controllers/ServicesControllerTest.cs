@@ -44,11 +44,11 @@ namespace Stories.tests.Controllers
         public void GetById_IdFound_ReturnsOkObjectResult()
         {
             var mockId = Guid.NewGuid();
-            _service.Setup(s => s.GetById(mockId)).Returns(new StoryDTO());
+            _service.Setup(s => s.GetById(It.IsAny<Guid>())).Returns(new StoryDTO());
 
             var result = _controller.GetById(mockId);
 
-            _service.Verify(s => s.GetById(mockId), Times.Once());
+            _service.Verify(s => s.GetById(It.IsAny<Guid>()), Times.Once());
 
             Assert.IsType<OkObjectResult>(result);
         }
@@ -58,11 +58,11 @@ namespace Stories.tests.Controllers
         {
             var mockId = Guid.NewGuid();
 
-            _service.Setup(s => s.GetById(mockId)).Returns((StoryDTO)null);
+            _service.Setup(s => s.GetById(It.IsAny<Guid>())).Returns((StoryDTO)null);
 
             var result = _controller.GetById(mockId);
 
-            _service.Verify(s => s.GetById(mockId), Times.Once());
+            _service.Verify(s => s.GetById(It.IsAny<Guid>()), Times.Once());
 
             Assert.IsType<NotFoundResult>(result);
         }

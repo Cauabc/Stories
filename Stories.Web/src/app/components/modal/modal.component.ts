@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { StoryService } from '../../services/story.service';
+import { Story } from '../../models/story/story';
 
 @Component({
   selector: 'app-modal',
@@ -36,8 +37,9 @@ export class ModalComponent {
     if (this.title.invalid || this.description.invalid || this.department.invalid){
       alert("Preencha os campos necessários.")
       return;
-    }
-    this.storyService.postStory(this.title.value ?? '', this.description.value ?? '', this.department.value ?? '');
+    } 
+    const newStory: Story = new Story(this.title.value ?? '', this.description.value ?? '', this.department.value ?? '');
+    this.storyService.postStory(newStory);
     this.dialogRef.close('Created.');
   }
 }
