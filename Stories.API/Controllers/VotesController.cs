@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Stories.API.Application.Requests;
 using Stories.Services.Services.Votes;
 using System.Net;
 
@@ -14,12 +13,12 @@ namespace Stories.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult Post([FromBody] VoteRequest request)
+        public IActionResult Post(Guid storyId, Guid accountId, bool upvote)
         {
-            if (request.StoryId == Guid.Empty || request.AccountId == Guid.Empty)
+            if (storyId == Guid.Empty || accountId == Guid.Empty)
                 return BadRequest();
 
-            if (_service.Create(request.StoryId, request.AccountId, request.Upvote))
+            if (_service.Create(storyId, accountId, upvote))
                 return Ok();
             
             return BadRequest();

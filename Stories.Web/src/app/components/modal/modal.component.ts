@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogActions, MatDialogClose, MatDialogContent, MatDialogModule, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { StoryService } from '../../services/story.service';
 
 @Component({
   selector: 'app-modal',
@@ -17,7 +18,7 @@ export class ModalComponent {
   description = new FormControl('', [Validators.required, Validators.maxLength(150)]);
   department = new FormControl('', [Validators.required, Validators.maxLength(30)])
   
-  constructor(public dialogRef: MatDialogRef<ModalComponent>) {}
+  constructor(public dialogRef: MatDialogRef<ModalComponent>, private storyService:StoryService) {}
 
   getErrorMessage() {
     if (this.title.hasError('required')) {
@@ -29,5 +30,14 @@ export class ModalComponent {
 
   closeDialog() {
     this.dialogRef.close('Closed.');
+  }
+
+  createStory(){
+    if (this.title.invalid || this.description.invalid || this.department.invalid){
+      alert("Preencha os campos necessários.")
+      return;
+    }
+    this.storyService.postStory(this.title.value ?? '', this.description.value ?? '', this.department.value ?? '');
+    this.dialogRef.close('Created.');
   }
 }

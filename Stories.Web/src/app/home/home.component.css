@@ -15,10 +15,14 @@ main{
 }
 
 .cardGroup{
-    margin-left: 1em;
+    margin-left: 2em;
     margin-right: 1em;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: stretch;
 }
 
 .footer{

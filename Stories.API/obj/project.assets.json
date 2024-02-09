@@ -4464,7 +4464,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\caua.cardoso\\.nuget\\packages\\": {}
+    "C:\\Users\\cauac\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -4472,11 +4472,11 @@
       "projectUniqueName": "C:\\dev\\Stories\\Stories.API\\Stories.API.csproj",
       "projectName": "Stories.API",
       "projectPath": "C:\\dev\\Stories\\Stories.API\\Stories.API.csproj",
-      "packagesPath": "C:\\Users\\caua.cardoso\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\cauac\\.nuget\\packages\\",
       "outputPath": "C:\\dev\\Stories\\Stories.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\caua.cardoso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\cauac\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4540,7 +4540,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
