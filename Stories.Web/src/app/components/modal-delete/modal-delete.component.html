@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Tem certeza que deseja remover a estória: '{{storyTitle}}'?</h2>
+<mat-dialog-content>
+  <p>Depois que deletar, ela sumirá para sempre.</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+    <button mat-raised-button color="primary" (click)="Delete()">Delete</button>
+</mat-dialog-actions>

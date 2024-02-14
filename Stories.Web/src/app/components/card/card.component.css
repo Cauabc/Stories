@@ -42,6 +42,14 @@ button{
 }
 
 .buttons{
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 1em;
+}
+
+.buttonsVote{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 

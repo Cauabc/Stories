@@ -42,4 +42,5 @@ export class ModalComponent {
     this.storyService.postStory(newStory);
     this.dialogRef.close('Created.');
   }
+
 }

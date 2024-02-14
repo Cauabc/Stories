@@ -32,12 +32,12 @@ namespace Stories.API.Controllers
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email))
                 return BadRequest();
 
-            var account = _service.Create(name, email);
+            var accountId = _service.Create(name, email);
 
-            if (account == Guid.Empty)
+            if (accountId == Guid.Empty)
                 return BadRequest();
             
-            return CreatedAtAction(nameof(Get), new { id = account }, new AccountViewModel { Id = account, Name = name, Email = email });
+            return CreatedAtAction(nameof(Get), new { id = accountId }, new AccountViewModel { Id = accountId, Name = name, Email = email });
         }
     }
 }
