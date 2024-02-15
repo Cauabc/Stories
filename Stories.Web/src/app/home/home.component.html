@@ -3,16 +3,25 @@
         <h1>Escolha um usuário: </h1>
         <mat-form-field>
             <mat-label>Escolha o usuário</mat-label>
-            <mat-select [(ngModel)]="selectedValue" name="user">
+            <mat-select [(ngModel)]="selectedUser" name="user">
                 @for (user of userData; track user) {
                     <mat-option [value]="user.id">{{user.name}}</mat-option>
                   }
             </mat-select>
         </mat-form-field>
+        <p>
+            Default appearance:
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" #group="matButtonToggleGroup" [(value)]="option" (valueChange)="changeSort()">
+              <mat-button-toggle value="default">Padrão</mat-button-toggle>
+              <mat-button-toggle value="likes">Likes</mat-button-toggle>
+              <mat-button-toggle value="dislikes">Dislikes</mat-button-toggle>
+            </mat-button-toggle-group>
+        </p>
     </div>
+
     <div class="cardGroup">
         @for (story of storyData; track story.id) {
-            <app-card [storyTitle]="story.title" [storyDescription]="story.description" [storyDepartment]="story.department" [userId]="selectedValue" [storyId]="story.id" [storyLikes]="story.likes" [storyDislikes]="story.dislikes"></app-card>
+            <app-card [storyTitle]="story.title" [storyDescription]="story.description" [storyDepartment]="story.department" [userId]="selectedUser" [storyId]="story.id" [storyLikes]="story.likes" [storyDislikes]="story.dislikes"></app-card>
         }
     </div>
     <div class="footer">
