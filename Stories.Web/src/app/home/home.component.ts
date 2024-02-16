@@ -9,8 +9,6 @@ import { FormsModule } from '@angular/forms';
 import { StoryService } from '../services/story.service';
 import { MatDialogModule, MatDialog, } from '@angular/material/dialog';
 import { ModalComponent } from '../components/modal/modal.component';
-import {MatButtonToggleGroup, MatButtonToggleModule} from '@angular/material/button-toggle'
-import { BehaviorSubject } from 'rxjs';
 
 interface User{
   id: string;
@@ -30,15 +28,11 @@ interface Story{
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, CardComponent, MatSelectModule, MatFormFieldModule, FormsModule, MatDialogModule, MatButtonToggleModule, MatButtonToggleGroup],
+  imports: [MatButtonModule, MatIconModule, CardComponent, MatSelectModule, MatFormFieldModule, FormsModule, MatDialogModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  private sortOption = new BehaviorSubject<string>("default")
-  currentSortOption = this.sortOption.asObservable();
-
-
   ngOnInit(): void {
     this.storyService.stories$.subscribe((stories: any) => {
       this.storyData = stories;
@@ -49,19 +43,20 @@ export class HomeComponent implements OnInit {
         case 'dislikes':
           this.storyData.sort((a, b) => b.dislikes - a.dislikes);
           break;
-        case 'default':
-          this.storyData.filter((story) => story)
-          break;
       }
     })
   }
 
-  changeSort(){
-    this.sortOption.next(this.option)
-    this.currentSortOption.subscribe((option: string) => {
-      this.sort = option
-      console.log(this.sort)
-    });
+  changeSort(sortOption: string){
+    this.sort = sortOption;
+    switch(sortOption){
+      case 'likes':
+        this.storyData.sort((a, b) => b.likes - a.likes);
+        break;
+      case 'dislikes':
+        this.storyData.sort((a, b) => b.dislikes - a.dislikes);
+        break;
+    }
   }
 
   userData: User[] = [];
@@ -69,7 +64,6 @@ export class HomeComponent implements OnInit {
   selectedUser: string = '';
   option: string = '';
   sort: string = '';
-
 
   constructor(private userService: UserService, private storyService: StoryService, public dialog: MatDialog){
     this.userService.getUsers().subscribe((users: any) => {

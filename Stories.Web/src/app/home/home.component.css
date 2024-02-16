@@ -37,3 +37,14 @@ main{
 .footer button{
     margin-right: 4vw;
 }
+
+.sortOption{
+    display: flex;
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-left: 1em;
+}
