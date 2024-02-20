@@ -1,0 +1,21 @@
+<div class="home">
+    <main class="main">
+        <div class="userChoice">
+            <p>Usuário: </p>
+            <mat-form-field>
+                <mat-label>Escolha o usuário</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let user of usersData" [value]="user.id">
+                        {{user.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="cards">
+            <app-card *ngFor="let story of storiesData" [storyTitle]="story.title" [storyDescription]="story.description" [storyDepartment]="story.department" [storyLikes]="story.likes" [storyDislikes]="story.dislikes"></app-card>
+        </div>
+    </main>
+    <div class="footer">
+        <button mat-fab color="primary" (click)="openDialog()"><mat-icon>add</mat-icon></button>
+    </div>
+</div>

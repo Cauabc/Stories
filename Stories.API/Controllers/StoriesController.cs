@@ -80,19 +80,5 @@ namespace Stories.API.Controllers
 
             return NotFound();
         }
-
-        [HttpGet("sorted")]
-        [ProducesResponseType(typeof(IEnumerable<StoryViewModel>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public IActionResult GetOrderedByLike()
-        {
-            var result = _service.GetAll().Where(s => s.Likes > s.Dislikes).OrderBy(s => s.Likes).Select(s => new StoryViewModel { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Likes, Dislikes = s.Dislikes });
-
-            if (result.Any())
-                return Ok(result);
-
-            return NoContent();
-
-        }
     }
 }

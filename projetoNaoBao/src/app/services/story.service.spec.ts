@@ -21,18 +21,16 @@ describe('StoryService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should return data from the API with GET method', () => {
+  it('should return data from the API with GET method', (done) => {
     const dummyData: Story[] = [
       { title: 'Story 1', description: 'Content 1', department: 'Department' },
     ];
-
-    service.getStories();
-
-    service.stories$.subscribe((stories: any) => {
-      expect(stories).toEqual(dummyData);
-    })
-
-    const request = httpMock.expectOne(`${service.apiUrl}/stories`);
+  
+    service.getStories().subscribe((data: any) => {
+      expect(data).toEqual(dummyData);
+      done();
+    });
+    const request = httpMock.expectOne(`${service.apiUrl}/Stories`);
     expect(request.request.method).toBe('GET');
     request.flush(dummyData);
   })

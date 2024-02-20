@@ -1,0 +1,26 @@
+.home{
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.footer{
+    text-align: end;
+    margin: 3em;
+}
+
+.userChoice{
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+.cards{
+    margin-left: 2em;
+    margin-right: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: stretch;
+}

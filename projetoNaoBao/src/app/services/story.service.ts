@@ -13,43 +13,47 @@ export class StoryService {
   apiUrl = 'https://localhost:7226/api';
 
   constructor(private http : HttpClient) {
-    this.getStories()
+    this.updateSubject()
   }
   
-  getStories(){
-    this.http.get<Story[]>(`${this.apiUrl}/stories`).subscribe(stories => {
-      this.storiesSubject.next(stories);
+  updateSubject(){
+    this.getStories().subscribe((data: any) => {
+      this.storiesSubject.next(data);
     });
+  }
+
+  getStories(){
+    return this.http.get<Story[]>(`${this.apiUrl}/Stories`)
   }
 
   postStory(story: Story){
     let params = new HttpParams().set('title', story.title).set('description', story.description).set('department', story.department);
-    this.http.post(`${this.apiUrl}/stories`, null, { params }).subscribe(() => {
-      this.getStories()
+    this.http.post(`${this.apiUrl}/Stories`, null, { params }).subscribe(() => {
+      this.updateSubject()
     });
   }
 
   postVotes(vote: Vote){
     let params = new HttpParams().set('accountId', vote.accountId).set('storyId', vote.storyId).set('upvote', vote.upvote);
-    return this.http.post(`${this.apiUrl}/votes`, null, {params}).subscribe(() => {
-      this.getStories()
+    return this.http.post(`${this.apiUrl}/Votes`, null, {params}).subscribe(() => {
+      this.updateSubject()
     });
   }
 
   deleteStory(storyId: string){
-    this.http.delete(`${this.apiUrl}/stories/${storyId}`).subscribe(() => {
-      this.getStories()
+    this.http.delete(`${this.apiUrl}/Stories/${storyId}`).subscribe(() => {
+      this.updateSubject()
     });
   }
 
   getStoryById(storyId: string): Observable<Story>{
-    return this.http.get<Story>(`${this.apiUrl}/stories/${storyId}`)
+    return this.http.get<Story>(`${this.apiUrl}/Stories/${storyId}`)
   }
 
   updateStory(storyId: string, title: string, description: string, department: string){
     let params = new HttpParams().set('title', title).set('description', description).set('department', department);
-    this.http.put(`${this.apiUrl}/stories/${storyId}`, null, {params}).subscribe(() => {
-      this.getStories()
+    this.http.put(`${this.apiUrl}/Stories/${storyId}`, null, {params}).subscribe(() => {
+      this.updateSubject()
     });
   }
 }
