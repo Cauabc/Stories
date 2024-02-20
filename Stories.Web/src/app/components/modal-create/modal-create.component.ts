@@ -14,7 +14,7 @@ export class ModalCreateComponent {
   description = new FormControl('', [Validators.required, Validators.maxLength(150)]);
   department = new FormControl('', [Validators.required, Validators.maxLength(30)])
 
-  constructor(public dialogRef: MatDialogRef<ModalCreateComponent>, private storyService: StoryService) {}
+  constructor(public dialogRef: MatDialogRef<ModalCreateComponent>) {}
 
   getErrorMessage() {
     if (this.title.hasError('required')) {
@@ -34,7 +34,6 @@ export class ModalCreateComponent {
       return;
     } 
     const newStory: StoryCreate = new StoryCreate(this.title.value ?? '', this.description.value ?? '', this.department.value ?? '');
-    this.storyService.postStory(newStory)
-    this.dialogRef.close('Created.');
+    this.dialogRef.close(newStory);
   }
 }

@@ -13,28 +13,37 @@ import { ModalCreateComponent } from './components/modal-create/modal-create.com
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { ModalDeleteComponent } from './components/modal-delete/modal-delete.component';
+import { ModalUpdateComponent } from './components/modal-update/modal-update.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { StoryService } from './services/story/story.service';
+import { UserService } from './services/user/user.service';
+import { VoteService } from './services/vote/vote.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CardComponent,
-    ModalCreateComponent
+    ModalCreateComponent,
+    ModalDeleteComponent,
+    ModalUpdateComponent,
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     AppRoutingModule,
     MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
     MatIconModule,
     HttpClientModule,
+    FormsModule,
     MatSelectModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule
   ],
-  providers: [HttpClient],
+  providers: [StoryService, UserService, VoteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

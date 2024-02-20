@@ -1,6 +1,6 @@
 .card{
     background-color: rgb(246, 248, 122);
-    width: clamp(50px, 22vw, 350px);
+    width: clamp(300px, 22vw, 350px);
     height: 100%;
     margin-bottom: 1em;
     border-radius: 7px;
@@ -28,7 +28,7 @@ p{
 }
 
 button{
-    margin: 0 15px;
+    margin: 0 clamp(10px, 1vw, 15px);
 }
 
 .likesCount{

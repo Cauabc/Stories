@@ -13,7 +13,7 @@ p{
 }
 
 .mat-form-field{
-    min-width: 400px !important;
+    min-width: clamp(250px, 30vw, 400px) !important;
 }
 
 .label-content{

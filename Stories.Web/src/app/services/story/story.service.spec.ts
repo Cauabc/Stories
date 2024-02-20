@@ -49,4 +49,38 @@ describe('StoryService', () => {
     expect(request.request.method).toBe('POST');
     request.flush(story);
   })
+
+  it('should delete a story when deleteStory is called', () => {
+    service.deleteStory('guid').subscribe((data) => {
+      expect(data).toBeNull();
+    })
+
+    const request = httpMock.expectOne(`${service.apiUrl}/guid`);
+    expect(request.request.method).toBe('DELETE');
+    request.flush(null);
+  })
+
+  it('should update a story when updateStory is called', () => {
+    const story: Story = { id: 'idmuitoseguro', title: 'story1', description: 'content1', department: 'department1', likes: 0, dislikes: 0 }
+
+    service.updateStory({ id: 'idmuitoseguro', title: 'story1', description: 'content1', department: 'department1' }).subscribe((data) => {
+      expect(data).toEqual(story);
+    })
+
+    const request = httpMock.expectOne(`${service.apiUrl}/idmuitoseguro?title=story1&description=content1&department=department1`);
+    expect(request.request.method).toBe('PUT');
+    request.flush(story);
+  })
+
+  it('should get the story when getStoryById is called', () => {
+    const story: Story = { id: 'idmuitoseguro', title: 'story1', description: 'content1', department: 'department1', likes: 0, dislikes: 0 }
+
+    service.getStoryById('idmuitoseguro').subscribe((data) => {
+      expect(data).toEqual(story);
+    })
+
+    const request = httpMock.expectOne(`${service.apiUrl}/idmuitoseguro`);
+    expect(request.request.method).toBe('GET');
+    request.flush(story);
+  })
 });

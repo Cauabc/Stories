@@ -1,4 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
+import { StoryService } from '../../services/story/story.service';
+import { ModalUpdateComponent } from '../modal-update/modal-update.component';
+import { StoryUpdate } from '../../models/story-update';
+import { VoteService } from '../../services/vote/vote.service';
+import { Vote } from '../../models/vote';
 
 @Component({
   selector: 'app-card',
@@ -11,16 +18,42 @@ export class CardComponent {
   @Input() storyDepartment: string = ''
   @Input() storyLikes: number = 0
   @Input() storyDislikes: number = 0
+  @Input() storyId: string = ''
+  @Input() userId: string = ''
+  @Output() storyDeleted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() storyUpdated: EventEmitter<StoryUpdate> = new EventEmitter<StoryUpdate>();
+  @Output() voteCreated: EventEmitter<Vote> = new EventEmitter<Vote>();
+
+  constructor(public dialog: MatDialog) {}
 
   createVote(choice: boolean){
-    console.log(choice)
+    this.voteCreated.emit({storyId: this.storyId, userId: this.userId, upvote: choice});
   }
 
   updateDialog(){
-    console.log('update dialog')
+    let dialogRef = this.dialog.open(ModalUpdateComponent, {
+      data: {
+        id: this.storyId
+      }
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'Closed.' || result === undefined) return;
+      this.storyUpdated.emit(result as StoryUpdate);
+    })
   }
 
-  openDialog(){
-    console.log('open dialog')
+  deleteDialog(){
+    let dialogRef = this.dialog.open(ModalDeleteComponent,{
+      data: {
+        id: this.storyId,
+        title: this.storyTitle
+      }
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'Closed.' || result === undefined) return;
+      this.storyDeleted.emit(result as string);
+    })
   }
 }
