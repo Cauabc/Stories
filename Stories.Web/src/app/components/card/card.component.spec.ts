@@ -40,4 +40,30 @@ describe('CardComponent', () => {
     component.createVote(true);
     expect(component.createVote).toHaveBeenCalled();
   })
+
+  it('should Input with story data be loaded rightly', () => {
+    const testData = {
+      storyTitle: 'Test Title',
+      storyDescription: 'Test Description',
+      storyDepartment: 'Test Department',
+      storyLikes: 0,
+      storyDislikes: 0,
+    }
+
+    const component = fixture.componentInstance;
+    component.storyTitle = testData.storyTitle;
+    component.storyDescription = testData.storyDescription;
+    component.storyDepartment = testData.storyDepartment;
+    component.storyLikes = testData.storyLikes;
+    component.storyDislikes = testData.storyDislikes;
+
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement;
+    
+    expect(compiled.querySelector('h1.cardTitle').textContent).toContain(testData.storyTitle);
+    expect(compiled.querySelector('p.cardDescription').textContent).toContain(testData.storyDescription);
+    expect(compiled.querySelector('small.cardDepartment').textContent).toContain(testData.storyDepartment);
+    expect(compiled.querySelector('small.likesCount').textContent).toContain(testData.storyLikes);
+    expect(compiled.querySelector('small.dislikesCount').textContent).toContain(testData.storyDislikes);
+  })
 });
