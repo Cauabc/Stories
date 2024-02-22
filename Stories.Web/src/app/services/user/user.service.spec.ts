@@ -36,4 +36,15 @@ describe('UserService', () => {
     expect(request.request.method).toBe('GET');
     request.flush(users);
   })
+
+  it('should return No Content when getUsers is called but with no data', () => {
+    service.getUsers().subscribe((data) => {
+        expect(data).toEqual([])
+      }
+    )
+
+    const request = httpMock.expectOne(service.apiUrl)
+    expect(request.request.method).toBe('GET')
+    request.flush([], { status: 204, statusText: 'No Content' })
+  })
 });

@@ -38,6 +38,16 @@ describe('StoryService', () => {
     request.flush(stories);
   })
 
+  it('should return 204 if no stories are found when getStories is called', () => {
+    service.getStories().subscribe((data: Story[]) => {
+      expect(data).toEqual([]);
+    })
+
+    const request = httpMock.expectOne(service.apiUrl);
+    expect(request.request.method).toBe('GET');
+    request.flush([], { status: 204, statusText: 'No Content' });
+  })
+
   it('should create a new story when postStory is called', () => {
     const story: Story = { id: 'idmuitoseguro', title: 'story1', description: 'content1', department: 'department1', likes: 0, dislikes: 0 }
 
@@ -50,6 +60,19 @@ describe('StoryService', () => {
     request.flush(story);
   })
 
+  it('should return a bad request when postStory is called with invalid data', () => {
+    service.postStory({ title: '', description: '', department: '' }).subscribe(() => fail(),
+      error => {
+        expect(error.status).toBe(400)
+        expect(error.statusText).toBe('Bad Request')
+      }
+    )
+
+    const request = httpMock.expectOne(`${service.apiUrl}?title=&description=&department=`);
+    expect(request.request.method).toBe('POST');
+    request.flush(null, { status: 400, statusText: 'Bad Request' });
+  })
+
   it('should delete a story when deleteStory is called', () => {
     service.deleteStory('guid').subscribe((data) => {
       expect(data).toBeNull();
@@ -58,6 +81,19 @@ describe('StoryService', () => {
     const request = httpMock.expectOne(`${service.apiUrl}/guid`);
     expect(request.request.method).toBe('DELETE');
     request.flush(null);
+  })
+
+  it('should return a bad request when deleteStory is called with an invalid id', () => {
+    service.deleteStory('idmuitoseguro').subscribe(() => fail(),
+      error => {
+        expect(error.status).toBe(400)
+        expect(error.statusText).toBe('Bad Request')
+      }
+    )
+
+    const request = httpMock.expectOne(`${service.apiUrl}/idmuitoseguro`);
+    expect(request.request.method).toBe('DELETE');
+    request.flush(null, { status: 400, statusText: 'Bad Request' });
   })
 
   it('should update a story when updateStory is called', () => {
@@ -72,6 +108,32 @@ describe('StoryService', () => {
     request.flush(story);
   })
 
+  it('should return a bad request when updateStory is called with empty data', () => {
+    service.updateStory({ id: 'idmuitoseguro', title: '', description: '', department: '' }).subscribe(() => fail(),
+      error => {
+        expect(error.status).toBe(400)
+        expect(error.statusText).toBe('Bad Request')
+      }
+    )
+
+    const request = httpMock.expectOne(`${service.apiUrl}/idmuitoseguro?title=&description=&department=`);
+    expect(request.request.method).toBe('PUT');
+    request.flush(null, { status: 400, statusText: 'Bad Request' });
+  })
+
+  it('should return a not found when updateStory is called with an invalid id', () => {
+    service.updateStory({ id: 'idmuitoseguro', title: 'story1', description: 'content1', department: 'department1' }).subscribe(() => fail(),
+      error => {
+        expect(error.status).toBe(404)
+        expect(error.statusText).toBe('Not Found')
+      }
+    )
+
+    const request = httpMock.expectOne(`${service.apiUrl}/idmuitoseguro?title=story1&description=content1&department=department1`);
+    expect(request.request.method).toBe('PUT');
+    request.flush(null, { status: 404, statusText: 'Not Found'})
+  })
+
   it('should get the story when getStoryById is called', () => {
     const story: Story = { id: 'idmuitoseguro', title: 'story1', description: 'content1', department: 'department1', likes: 0, dislikes: 0 }
 
@@ -82,5 +144,19 @@ describe('StoryService', () => {
     const request = httpMock.expectOne(`${service.apiUrl}/idmuitoseguro`);
     expect(request.request.method).toBe('GET');
     request.flush(story);
+  })
+
+  it('should return Not Found when getStoryById is called with an invalid id', () => {
+  
+    service.getStoryById('idmuitoseguro').subscribe(() => fail(),
+      error => {
+        expect(error.status).toBe(404)
+        expect(error.statusText).toBe('Not Found')
+      }
+    )
+
+    const request = httpMock.expectOne(`${service.apiUrl}/idmuitoseguro`);
+    expect(request.request.method).toBe('GET');
+    request.flush(null, { status: 404, statusText: 'Not Found' });
   })
 });

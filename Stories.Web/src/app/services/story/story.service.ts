@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Story } from '../../models/story';
 import { StoryCreate } from '../../models/story-create';
 import { StoryUpdate } from '../../models/story-update';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,24 +12,24 @@ export class StoryService {
   apiUrl: string = 'https://localhost:7226/api/Stories'
   constructor(private httpClient: HttpClient) { }
 
-  getStories(){
+  getStories(): Observable<Story[]>{
     return this.httpClient.get<Story[]>(this.apiUrl);
   }
 
-  getStoryById(storyId: string){
+  getStoryById(storyId: string): Observable<Story>{
     return this.httpClient.get<Story>(`${this.apiUrl}/${storyId}`);
   }
 
-  postStory(story: StoryCreate){
+  postStory(story: StoryCreate): Observable<Object>{
     const params: HttpParams = new HttpParams().set('title', story.title).set('description', story.description).set('department', story.department);
     return this.httpClient.post(this.apiUrl, null, {params})
   }
 
-  deleteStory(storyId: string){
+  deleteStory(storyId: string): Observable<Object>{
     return this.httpClient.delete(`${this.apiUrl}/${storyId}`);
   }
 
-  updateStory(story: StoryUpdate){
+  updateStory(story: StoryUpdate): Observable<Object>{
     const params: HttpParams = new HttpParams().set('title', story.title).set('description', story.description).set('department', story.department);
     return this.httpClient.put(`${this.apiUrl}/${story.id}`, null, { params });
   }

@@ -35,4 +35,20 @@ describe('VoteService', () => {
     expect(req.request.method).toBe('POST');
     req.flush(vote);
   })
+
+  it('should return Bad Request when postVote is called with invalid data', () => {
+    const vote = { 
+      storyId: 'storyId',
+      userId: 'userId',
+      vote: true
+    }
+    service.postVote(vote.storyId, vote.userId, vote.vote).subscribe(() => fail(), error => {
+      expect(error.status).toBe(400)
+      expect(error.statusText).toBe('Bad Request')
+    })
+
+    const request = httpMock.expectOne(`${service.apiUrl}?storyId=storyId&accountId=userId&upvote=true`)
+    expect(request.request.method).toBe('POST')
+    request.flush(null, { status: 400, statusText: 'Bad Request'})
+  })
 });
