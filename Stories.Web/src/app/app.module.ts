@@ -18,7 +18,6 @@ import { ModalUpdateComponent } from './components/modal-update/modal-update.com
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { StoryService } from './services/story/story.service';
 import { UserService } from './services/user/user.service';
-import { VoteService } from './services/vote/vote.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,7 @@ import { VoteService } from './services/vote/vote.service';
     BrowserAnimationsModule,
     MatDialogModule,
   ],
-  providers: [StoryService, UserService, VoteService],
+  providers: [StoryService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

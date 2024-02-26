@@ -12,11 +12,6 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="sortOption">
-                <p>Deseja filtrar por: </p>
-                <button mat-raised-button color="primary" (click)="sortByOption('likes')">Likes</button>
-                <button mat-raised-button color="primary" (click)="sortByOption('dislikes')">Dislikes</button>
-            </div>
         </div>
         <div class="cards">
             <app-card *ngFor="let story of storiesData" (voteCreated)="createVote($event)" [userId]="userId" (storyUpdated)="updateStory($event)" (storyDeleted)="deleteStory($event)" [storyId]="story.id" [storyTitle]="story.title" [storyDescription]="story.description" [storyDepartment]="story.department" [storyLikes]="story.likes" [storyDislikes]="story.dislikes"></app-card>

@@ -33,4 +33,9 @@ export class StoryService {
     const params: HttpParams = new HttpParams().set('title', story.title).set('description', story.description).set('department', story.department);
     return this.httpClient.put(`${this.apiUrl}/${story.id}`, null, { params });
   }
+
+  postVote(storyId: string, accountId: string, upvote: boolean){
+    const params: HttpParams = new HttpParams().set('id', storyId).set('accountId', accountId).set('upvote', upvote.toString());
+    return this.httpClient.post(`${this.apiUrl}/${storyId}/vote`, null, { params });
+  }
 }

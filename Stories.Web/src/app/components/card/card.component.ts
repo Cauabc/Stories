@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalDeleteComponent } from '../modal-delete/modal-delete.component';
-import { StoryService } from '../../services/story/story.service';
 import { ModalUpdateComponent } from '../modal-update/modal-update.component';
 import { StoryUpdate } from '../../models/story-update';
-import { VoteService } from '../../services/vote/vote.service';
 import { Vote } from '../../models/vote';
 
 @Component({

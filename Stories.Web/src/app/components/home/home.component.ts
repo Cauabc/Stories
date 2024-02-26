@@ -8,7 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalCreateComponent } from '../modal-create/modal-create.component';
 import { StoryCreate } from '../../models/story-create';
 import { StoryUpdate } from '../../models/story-update';
-import { VoteService } from '../../services/vote/vote.service';
 import { Vote } from '../../models/vote';
 
 @Component({
@@ -22,9 +21,8 @@ export class HomeComponent {
   storiesSubject: BehaviorSubject<Story[]> = new BehaviorSubject<Story[]>([])
   stories$ = this.storiesSubject.asObservable();
   userId: string = '';
-  sortOption: string = '';
 
-  constructor(private userService: UserService, private storyService: StoryService, public dialog: MatDialog, private voteService: VoteService) { 
+  constructor(private userService: UserService, private storyService: StoryService, public dialog: MatDialog) { 
     this.userService.getUsers().subscribe((data: User[]) => {
       this.usersData = data;
     });
@@ -34,8 +32,11 @@ export class HomeComponent {
 
   getStories(){
     this.storyService.getStories().subscribe((data: Story[]) => {
-      this.storiesData = data;
-      this.sortByOption(this.sortOption);
+      this.storiesData = data.sort((a, b) => {
+        const votesA = a.likes + a.dislikes;
+        const votesB = b.likes + b.dislikes;
+        return votesB - votesA;
+      });
       this.storiesSubject.next(this.storiesData);
     })
   }
@@ -74,26 +75,8 @@ export class HomeComponent {
       alert('Você precisa escolher um usuário para votar.');
       return;
     };
-    this.voteService.postVote(vote.storyId, vote.userId, vote.upvote).subscribe(() => {
+    this.storyService.postVote(vote.storyId, vote.userId, vote.upvote).subscribe(() => {
       this.getStories()
     })
   }
-
-  sortByOption(choice: string = 'default'){
-    this.sortOption = choice;
-    switch (choice)
-    {
-      case 'likes':
-        this.storiesData.sort((a, b) => {
-          return b.likes - a.likes;
-        })
-        break;
-      case 'dislikes':
-        this.storiesData.sort((a, b) => {
-          return b.dislikes - a.dislikes;
-        })
-        break;
-    }
-  }
-
 }
