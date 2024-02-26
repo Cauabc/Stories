@@ -35,7 +35,7 @@ export class StoryService {
   }
 
   postVote(storyId: string, accountId: string, upvote: boolean){
-    const params: HttpParams = new HttpParams().set('id', storyId).set('accountId', accountId).set('upvote', upvote.toString());
+    const params: HttpParams = new HttpParams().set('accountId', accountId).set('upvote', upvote.toString());
     return this.httpClient.post(`${this.apiUrl}/${storyId}/vote`, null, { params });
   }
 }
