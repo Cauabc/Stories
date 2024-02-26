@@ -6,11 +6,11 @@ using Stories.Services.Services.Story;
 
 namespace Stories.tests.Controllers
 {
-    public class ServicesControllerTest
+    public class StoriesControllerTest
     {
         private readonly Mock<IStoryService> _service;
         private readonly StoriesController _controller;
-        public ServicesControllerTest()
+        public StoriesControllerTest()
         {
             _service = new Mock<IStoryService>();
             _controller = new StoriesController(_service.Object);
@@ -155,6 +155,39 @@ namespace Stories.tests.Controllers
             var result = _controller.Put(Guid.NewGuid(), "", "", "");
 
             _service.Verify(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never());
+
+            Assert.IsType<BadRequestResult>(result);
+        }
+        [Fact]
+        public void Vote_ValidData_ReturnsOk()
+        {
+            _service.Setup(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>())).Returns(true);
+
+            var result = _controller.Vote(Guid.NewGuid(), Guid.NewGuid(), true);
+
+            _service.Verify(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>()), Times.Once());
+
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Vote_InvalidData_ReturnsBadRequest()
+        {
+            _service.Setup(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>())).Returns(false);
+
+            var result = _controller.Vote(Guid.NewGuid(), Guid.NewGuid(), true);
+
+            _service.Verify(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>()), Times.Once());
+
+            Assert.IsType<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public void Vote_EmptyData_ReturnsBadRequest()
+        {
+            var result = _controller.Vote(Guid.Empty, Guid.Empty, false);
+
+            _service.Verify(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>()), Times.Never());
 
             Assert.IsType<BadRequestResult>(result);
         }

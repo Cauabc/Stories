@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using StoryEntity = Stories.Infrastructure.Models.Story;
 using VoteEntity = Stories.Infrastructure.Models.Vote;
+using AccountEntity = Stories.Infrastructure.Models.Account;
+
 namespace Stories.Infrastructure.Data.ModelConfigs.Vote
 {
     public class VoteConfig : IEntityTypeConfiguration<VoteEntity>
@@ -10,12 +13,12 @@ namespace Stories.Infrastructure.Data.ModelConfigs.Vote
             builder.Property(v => v.Upvote)
                 .IsRequired();
 
-            builder.HasOne(v => v.Story)
+            builder.HasOne<StoryEntity>()
                 .WithMany(s => s.Votes)
                 .HasForeignKey(v => v.StoryId);
 
-            builder.HasOne(v => v.Account)
-                .WithMany(a => a.Votes)
+            builder.HasOne<AccountEntity>()
+                .WithMany()
                 .HasForeignKey(v => v.AccountId);
         }
     }

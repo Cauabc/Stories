@@ -15,9 +15,5 @@ public class AccountConfig : IEntityTypeConfiguration<AccountEntity>
         builder.Property(a => a.Email)
             .IsRequired()
             .HasMaxLength(50);
-
-        builder.HasMany(a => a.Votes)
-            .WithOne(v => v.Account)
-            .HasForeignKey(v => v.AccountId);
     }
 }

@@ -132,5 +132,29 @@ namespace Stories.tests.Services
 
             Assert.False(result);
         }
+
+        [Fact]
+        public void Vote_ValidData_ReturnsTrue()
+        {
+            _service.Setup(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>())).Returns(true);
+
+            var result = _service.Object.PostVote(Guid.NewGuid(), Guid.NewGuid(), true);
+
+            _service.Verify(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>()), Times.Once());
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Vote_InvalidData_ReturnsFalse()
+        {
+            _service.Setup(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>())).Returns(false);
+
+            var result = _service.Object.PostVote(Guid.NewGuid(), Guid.NewGuid(), true);
+
+            _service.Verify(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>()), Times.Once());
+
+            Assert.False(result);
+        }
     }
 }

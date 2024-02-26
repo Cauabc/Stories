@@ -80,5 +80,22 @@ namespace Stories.API.Controllers
 
             return NotFound();
         }
+
+        [HttpPost("{id:guid}/vote")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult Vote(Guid id, [FromQuery] Guid accountId, [FromQuery] bool upvote)
+        {
+            bool storyExists = _service.GetById(id) != null;
+
+            if (id == Guid.Empty || accountId == Guid.Empty)
+                return BadRequest();
+
+            if (!storyExists)
+                return BadRequest();
+
+            _service.PostVote(id, accountId, upvote);
+            return Ok();
+        }
     }
 }

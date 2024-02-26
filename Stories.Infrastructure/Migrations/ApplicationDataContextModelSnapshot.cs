@@ -95,26 +95,17 @@ namespace Stories.Infrastructure.Migrations
 
             modelBuilder.Entity("Stories.Infrastructure.Models.Vote", b =>
                 {
-                    b.HasOne("Stories.Infrastructure.Models.Account", "Account")
-                        .WithMany("Votes")
+                    b.HasOne("Stories.Infrastructure.Models.Account", null)
+                        .WithMany()
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Stories.Infrastructure.Models.Story", "Story")
+                    b.HasOne("Stories.Infrastructure.Models.Story", null)
                         .WithMany("Votes")
                         .HasForeignKey("StoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Account");
-
-                    b.Navigation("Story");
-                });
-
-            modelBuilder.Entity("Stories.Infrastructure.Models.Account", b =>
-                {
-                    b.Navigation("Votes");
                 });
 
             modelBuilder.Entity("Stories.Infrastructure.Models.Story", b =>

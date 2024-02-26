@@ -21,7 +21,7 @@ public class StoryConfig : IEntityTypeConfiguration<StoryEntity>
             .HasMaxLength(30);
 
         builder.HasMany(s => s.Votes)
-            .WithOne(v => v.Story)
+            .WithOne()
             .HasForeignKey(v => v.StoryId);
     }
 }
