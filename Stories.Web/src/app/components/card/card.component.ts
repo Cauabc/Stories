@@ -35,9 +35,9 @@ export class CardComponent {
       }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'Closed.' || result === undefined) return;
-      this.storyUpdated.emit(result as StoryUpdate);
+    dialogRef.afterClosed().subscribe((result: StoryUpdate) => {
+      if (typeof result === 'string' || typeof result === undefined) return;
+      this.storyUpdated.emit(result);
     })
   }
 
@@ -51,7 +51,7 @@ export class CardComponent {
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result === 'Closed.' || result === undefined) return;
-      this.storyDeleted.emit(result as string);
+      this.storyDeleted.emit(result);
     })
   }
 }
