@@ -32,11 +32,9 @@ export class HomeComponent {
 
   getStories(){
     this.storyService.getStories().subscribe((data: Story[]) => {
-      this.storiesData = data.sort((a, b) => {
-        const votesA = a.likes + a.dislikes;
-        const votesB = b.likes + b.dislikes;
-        return votesB - votesA;
-      });
+      if (data === null) return;
+      this.storiesData = data;
+      this.storiesData.sort((a, b) => (b.likes + b.dislikes) - (a.likes + a.dislikes));
       this.storiesSubject.next(this.storiesData);
     })
   }

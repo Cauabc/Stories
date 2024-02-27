@@ -49,7 +49,7 @@ export class CardComponent {
       }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: string) => {
       if (result === 'Closed.' || result === undefined) return;
       this.storyDeleted.emit(result as string);
     })
