@@ -9,3 +9,8 @@ C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.dll
 C:\dev\Stories\Stories.Services\obj\Debug\net8.0\refint\Stories.Services.dll
 C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.pdb
 C:\dev\Stories\Stories.Services\obj\Debug\net8.0\ref\Stories.Services.dll
+C:\dev\Stories\Stories.Services\bin\Debug\net8.0\Stories.Infrastructure.dll
+C:\dev\Stories\Stories.Services\bin\Debug\net8.0\Stories.Infrastructure.pdb
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.csproj.AssemblyReference.cache
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.sourcelink.json
+C:\dev\Stories\Stories.Services\obj\Debug\net8.0\Stories.Services.csproj.CopyComplete

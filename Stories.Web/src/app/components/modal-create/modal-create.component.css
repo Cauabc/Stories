@@ -1,0 +1,21 @@
+p{
+    font-weight: 800;
+}
+
+.modal{
+    padding: 20px;
+}
+
+.buttons{
+    margin-top: 1em;
+    display: flex;
+    gap: 20px;
+}
+
+.mat-form-field{
+    min-width: clamp(250px, 30vw, 400px) !important;
+}
+
+.label-content{
+    padding: 10px;
+}

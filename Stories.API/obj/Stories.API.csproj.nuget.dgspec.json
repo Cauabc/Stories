@@ -10,11 +10,11 @@
         "projectUniqueName": "C:\\dev\\Stories\\Stories.API\\Stories.API.csproj",
         "projectName": "Stories.API",
         "projectPath": "C:\\dev\\Stories\\Stories.API\\Stories.API.csproj",
-        "packagesPath": "C:\\Users\\caua.cardoso\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\cauac\\.nuget\\packages\\",
         "outputPath": "C:\\dev\\Stories\\Stories.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\caua.cardoso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\cauac\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -48,6 +48,12 @@
               "target": "Package",
               "version": "[8.0.1, )"
             },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
@@ -72,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -82,11 +88,11 @@
         "projectUniqueName": "C:\\dev\\Stories\\Stories.Infrastructure\\Stories.Infrastructure.csproj",
         "projectName": "Stories.Infrastructure",
         "projectPath": "C:\\dev\\Stories\\Stories.Infrastructure\\Stories.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\caua.cardoso\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\cauac\\.nuget\\packages\\",
         "outputPath": "C:\\dev\\Stories\\Stories.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\caua.cardoso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\cauac\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -111,6 +117,28 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -127,7 +155,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
@@ -137,11 +165,11 @@
         "projectUniqueName": "C:\\dev\\Stories\\Stories.Services\\Stories.Services.csproj",
         "projectName": "Stories.Services",
         "projectPath": "C:\\dev\\Stories\\Stories.Services\\Stories.Services.csproj",
-        "packagesPath": "C:\\Users\\caua.cardoso\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\cauac\\.nuget\\packages\\",
         "outputPath": "C:\\dev\\Stories\\Stories.Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\caua.cardoso\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\cauac\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -186,7 +214,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

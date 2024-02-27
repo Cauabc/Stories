@@ -1,0 +1,15 @@
+C:\dev\Stories\Stories.Infrastructure\bin\Debug\net8.0\Stories.Infrastructure.deps.json
+C:\dev\Stories\Stories.Infrastructure\bin\Debug\net8.0\Stories.Infrastructure.runtimeconfig.json
+C:\dev\Stories\Stories.Infrastructure\bin\Debug\net8.0\Stories.Infrastructure.dll
+C:\dev\Stories\Stories.Infrastructure\bin\Debug\net8.0\Stories.Infrastructure.pdb
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.csproj.AssemblyReference.cache
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.AssemblyInfoInputs.cache
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.AssemblyInfo.cs
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.csproj.CoreCompileInputs.cache
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.sourcelink.json
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.dll
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\refint\Stories.Infrastructure.dll
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.pdb
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\Stories.Infrastructure.genruntimeconfig.cache
+C:\dev\Stories\Stories.Infrastructure\obj\Debug\net8.0\ref\Stories.Infrastructure.dll

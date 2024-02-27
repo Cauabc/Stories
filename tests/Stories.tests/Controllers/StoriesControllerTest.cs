@@ -1,0 +1,195 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Stories.API.Controllers;
+using Stories.Services.DTOs;
+using Stories.Services.Services.Story;
+
+namespace Stories.tests.Controllers
+{
+    public class StoriesControllerTest
+    {
+        private readonly Mock<IStoryService> _service;
+        private readonly StoriesController _controller;
+        public StoriesControllerTest()
+        {
+            _service = new Mock<IStoryService>();
+            _controller = new StoriesController(_service.Object);
+        }
+
+        [Fact]
+        public void GetAll_HasData_ReturnsOkObjectResult()
+        {
+            _service.Setup(s => s.GetAll()).Returns(new List<StoryDTO> { new() });
+
+            var result = _controller.Get();
+
+            _service.Verify(s => s.GetAll(), Times.Once());
+
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public void GetAll_HasNoData_ReturnsNoContent()
+        {
+            _service.Setup(s => s.GetAll()).Returns(new List<StoryDTO>());
+
+            var result = _controller.Get();
+
+            _service.Verify(s => s.GetAll(), Times.Once());
+
+            Assert.IsType<NoContentResult>(result);
+        }
+
+        [Fact]
+        public void GetById_IdFound_ReturnsOkObjectResult()
+        {
+            var mockId = Guid.NewGuid();
+            _service.Setup(s => s.GetById(It.IsAny<Guid>())).Returns(new StoryDTO());
+
+            var result = _controller.GetById(mockId);
+
+            _service.Verify(s => s.GetById(It.IsAny<Guid>()), Times.Once());
+
+            Assert.IsType<OkObjectResult>(result);
+        }
+
+        [Fact]
+        public void GetById_IdNotFound_ReturnsNotFound()
+        {
+            var mockId = Guid.NewGuid();
+
+            _service.Setup(s => s.GetById(It.IsAny<Guid>())).Returns((StoryDTO)null);
+
+            var result = _controller.GetById(mockId);
+
+            _service.Verify(s => s.GetById(It.IsAny<Guid>()), Times.Once());
+
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public void Post_ValidData_ReturnsCreated()
+        {
+            _service.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Guid.NewGuid());
+
+            var result = _controller.Post("Title", "Description", "Department");
+
+            _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+            Assert.IsType<CreatedAtActionResult>(result);       
+        }
+
+        [Fact]
+        public void Post_EmptyData_ReturnsBadRequest()
+        {
+            var result = _controller.Post("", "", "");
+
+            _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+
+            Assert.IsType<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public void Post_InvalidData_ReturnsBadRequest()
+        {
+            _service.Setup(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(Guid.Empty);
+
+            var result = _controller.Post("Title", "Description", "Department");
+
+            _service.Verify(s => s.Create(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+            Assert.IsType<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public void Delete_ValidId_ReturnsOk()
+        {
+            _service.Setup(s => s.Delete(It.IsAny<Guid>())).Returns(true);
+
+            var result = _controller.Delete(Guid.NewGuid());
+
+            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once());
+
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Delete_InvalidId_ReturnsNotFound()
+        {
+            _service.Setup(s => s.Delete(It.IsAny<Guid>())).Returns(false);
+
+            var result = _controller.Delete(Guid.NewGuid());
+
+            _service.Verify(s => s.Delete(It.IsAny<Guid>()), Times.Once());
+
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public void Update_ValidData_ReturnsOk()
+        {
+            _service.Setup(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+
+            var result = _controller.Put(Guid.NewGuid(), "Title", "Description", "Department");
+
+            _service.Verify(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Update_InvalidData_ReturnsNotFound()
+        {
+            _service.Setup(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).Returns(false);
+
+            var result = _controller.Put(Guid.NewGuid(), "Title", "Description", "Department");
+
+            _service.Verify(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Once());
+
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public void Update_EmptyData_ReturnsBadRequest()
+        {
+            var result = _controller.Put(Guid.NewGuid(), "", "", "");
+
+            _service.Verify(s => s.Update(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never());
+
+            Assert.IsType<BadRequestResult>(result);
+        }
+        [Fact]
+        public void Vote_ValidData_ReturnsOk()
+        {
+            _service.Setup(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>())).Returns(true);
+
+            var result = _controller.Vote(Guid.NewGuid(), Guid.NewGuid(), true);
+
+            _service.Verify(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>()), Times.Once());
+
+            Assert.IsType<OkResult>(result);
+        }
+
+        [Fact]
+        public void Vote_InvalidData_ReturnsBadRequest()
+        {
+            _service.Setup(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>())).Returns(false);
+
+            var result = _controller.Vote(Guid.NewGuid(), Guid.NewGuid(), true);
+
+            _service.Verify(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>()), Times.Once());
+
+            Assert.IsType<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public void Vote_EmptyData_ReturnsBadRequest()
+        {
+            var result = _controller.Vote(Guid.Empty, Guid.Empty, false);
+
+            _service.Verify(s => s.PostVote(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<bool>()), Times.Never());
+
+            Assert.IsType<BadRequestResult>(result);
+        }
+    }
+}
