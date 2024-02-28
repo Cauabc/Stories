@@ -1,5 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Stories.API.Application.ViewModels;
+using Stories.API.Commands.Requests;
+using Stories.API.Handlers;
+using Stories.API.Queries;
+using Stories.API.Queries.Requests;
+using Stories.API.Queries.Responses;
 using Stories.Services.Services.Story;
 using System.Net;
 
@@ -7,34 +13,34 @@ namespace Stories.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StoriesController(IStoryService service) : ControllerBase
+    public class StoriesController(IStoryService service, IMediator mediator) : ControllerBase
     {
         private readonly IStoryService _service = service;
+        private readonly IMediator _mediator = mediator;
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<StoryViewModel>),(int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var result = _service.GetAll().Select(s => new StoryViewModel { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Likes, Dislikes = s.Dislikes});
-            
-            if (result.Any())
-                return Ok(result);
+            var query = new GetAllStoriesQuery();
+
+            var response = await _mediator.Send(query);
+
+            if (response.Any())
+                return Ok(response);
 
             return NoContent();
         }
 
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(StoryViewModel), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(FindStoryByIdResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public IActionResult GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var result = _service.GetById(id);
+            var command = new FindStoryByIdRequest { Id = id };
 
-            if (result == null)
-                return NotFound();
-
-            var response = new StoryViewModel { Id = result.Id, Title = result.Title, Description = result.Description, Department = result.Department, Likes = result.Likes, Dislikes = result.Dislikes };
+            var response = await _mediator.Send(command);
 
             return Ok(response);
         }
@@ -42,17 +48,11 @@ namespace Stories.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult Post(string title, string description, string department)
+        public async Task<IActionResult> Post([FromBody]CreateStoryRequest command)
         {
-            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(department))
-                return BadRequest();
+            var response = await _mediator.Send(command);
 
-            var resultId = _service.Create(title, description, department);
-
-            if (resultId == Guid.Empty)
-                return BadRequest();
-
-            return CreatedAtAction(nameof(Get), new { id = resultId }, new StoryViewModel { Id = resultId, Title = title, Description = description, Department = department });
+            return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
         }
 
         [HttpDelete("{id:guid}")]

@@ -1,7 +1,9 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Stories.Infrastructure.Data;
 using Stories.Services.Services.Account;
 using Stories.Services.Services.Story;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddDbContext<ApplicationDataContext>(opt =>
 });
 builder.Services.AddScoped<IStoryService, StoryService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>()    );
 
 builder.Services.AddCors(options =>
 {

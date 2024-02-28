@@ -1,4 +1,5 @@
-﻿using Stories.Infrastructure.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Stories.Infrastructure.Data;
 using Stories.Services.DTOs;
 using StoryEntity = Stories.Infrastructure.Models.Story;
 using VoteEntity = Stories.Infrastructure.Models.Vote;
@@ -9,14 +10,13 @@ public class StoryService(ApplicationDataContext context) : IStoryService
 {
     private readonly ApplicationDataContext _context = context;
 
-    public Guid Create(string title, string description, string department)
+    public async Task<Guid> Create(string title, string description, string department)
     {
         var storyToCreate = new StoryEntity { Title = title, Description = description, Department = department };
 
         _context.Stories.Add(storyToCreate);
 
-        if (_context.SaveChanges() == 0)
-            return Guid.Empty;
+        await _context.SaveChangesAsync();
 
         return storyToCreate.Id;
     }
@@ -34,14 +34,25 @@ public class StoryService(ApplicationDataContext context) : IStoryService
         return true;
     }
 
-    public IEnumerable<StoryDTO> GetAll()
+    public async Task<IEnumerable<StoryDTO>> GetAll()
     {
-        return _context.Stories.Select(s => new StoryDTO { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Votes.Count(v => v.Upvote), Dislikes = s.Votes.Count(v => v.Upvote == false) }).ToList();
+        var result = await _context.Stories.Select(s => new StoryDTO
+        {
+            Id = s.Id,
+            Title = s.Title,
+            Description = s.Description,
+            Department = s.Department,
+            Likes = s.Votes.Count(v => v.Upvote),
+            Dislikes = s.Votes.Count(v => v.Upvote == false)
+        })
+        .ToListAsync();
+
+        return result;
     }
 
-    public StoryDTO GetById(Guid id)
+    public async Task<StoryDTO> GetById(Guid id)
     {
-        return _context.Stories.Select(s => new StoryDTO { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Votes.Count(v => v.Upvote), Dislikes = s.Votes.Count(v => v.Upvote == false) }).FirstOrDefault(s => s.Id == id);
+        return await _context.Stories.Select(s => new StoryDTO { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Votes.Count(v => v.Upvote), Dislikes = s.Votes.Count(v => v.Upvote == false) }).FirstOrDefaultAsync(s => s.Id == id);
     }
 
     public bool Update(Guid id, string title, string description, string department)
