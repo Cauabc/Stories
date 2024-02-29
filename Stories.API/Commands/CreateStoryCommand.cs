@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using Stories.API.Commands.Response;
 
-namespace Stories.API.Commands.Requests
+namespace Stories.API.Commands
 {
-    public class CreateStoryRequest : IRequest<CreateStoryResponse>
+    public class CreateStoryCommand : IRequest<Guid>
     {
         public string Title { get; set; }
         public string Description { get; set; }

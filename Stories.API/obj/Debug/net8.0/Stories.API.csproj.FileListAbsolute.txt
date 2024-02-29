@@ -142,3 +142,5 @@ C:\dev\Stories\Stories.API\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Works
 C:\dev\Stories\Stories.API\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\dev\Stories\Stories.API\bin\Debug\net8.0\MediatR.dll
 C:\dev\Stories\Stories.API\bin\Debug\net8.0\MediatR.Contracts.dll
+C:\dev\Stories\Stories.API\bin\Debug\net8.0\FluentValidation.dll
+C:\dev\Stories\Stories.API\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll

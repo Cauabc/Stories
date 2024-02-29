@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace Stories.API.Commands.Requests
+namespace Stories.API.Commands
 {
-    public class UpdateStoryRequest : IRequest<bool?>
+    public class UpdateStoryCommand : IRequest<bool?>
     {
         public Guid Id { get; set; }
         public string Title { get; set; }

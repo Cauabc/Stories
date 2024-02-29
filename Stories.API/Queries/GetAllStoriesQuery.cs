@@ -5,5 +5,6 @@ namespace Stories.API.Queries
 {
     public class GetAllStoriesQuery : IRequest<IEnumerable<StoryViewModel>>
     {
+
     }
 }

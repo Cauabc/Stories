@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Stories.API.Application.ViewModels;
+using Stories.API.Commands;
+using Stories.API.Queries;
 using Stories.Services.Services.Account;
 using System.Net;
 
@@ -7,16 +10,19 @@ namespace Stories.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountsController(IAccountService service) : ControllerBase
+    public class AccountsController(IAccountService service, IMediator mediator) : ControllerBase
     {
         private readonly IAccountService _service = service;
+        private readonly IMediator _mediator = mediator;
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<AccountViewModel>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var result = _service.GetAll().Select(s => new AccountViewModel { Id = s.Id, Name = s.Name, Email = s.Email });
+            var command = new GetAllUsersQuery();
+
+            var result = await _mediator.Send(command);
 
             if (result.Any())
                 return Ok(result);
@@ -27,17 +33,14 @@ namespace Stories.API.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult Post(string name, string email)
+        public async Task<IActionResult> Post([FromBody] CreateAccountCommand command)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email))
+            var response = await _mediator.Send(command);
+
+            if (response == Guid.Empty)
                 return BadRequest();
 
-            var accountId = _service.Create(name, email);
-
-            if (accountId == Guid.Empty)
-                return BadRequest();
-            
-            return CreatedAtAction(nameof(Get), new { id = accountId }, new AccountViewModel { Id = accountId, Name = name, Email = email });
+            return CreatedAtAction(nameof(Get), new { id = response }, command);
         }
     }
 }

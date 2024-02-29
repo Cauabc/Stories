@@ -1,5 +1,8 @@
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Stories.API.Commands;
+using Stories.API.Validators;
 using Stories.Infrastructure.Data;
 using Stories.Services.Services.Account;
 using Stories.Services.Services.Story;
@@ -16,8 +19,8 @@ builder.Services.AddDbContext<ApplicationDataContext>(opt =>
 });
 builder.Services.AddScoped<IStoryService, StoryService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>()    );
-
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
