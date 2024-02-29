@@ -12,6 +12,9 @@ namespace Stories.API.Handlers
         {
             var result = await _service.GetById(request.Id);
 
+            if (result == null)
+                return null;
+
             var response = new FindStoryByIdResponse
             {
                 Id = result.Id,

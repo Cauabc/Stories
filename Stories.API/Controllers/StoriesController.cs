@@ -27,10 +27,10 @@ namespace Stories.API.Controllers
 
             var response = await _mediator.Send(query);
 
-            if (response.Any())
-                return Ok(response);
+            if (!response.Any())
+                return NoContent();
 
-            return NoContent();
+            return Ok(response);
         }
 
         [HttpGet("{id:guid}")]
@@ -41,6 +41,9 @@ namespace Stories.API.Controllers
             var command = new FindStoryByIdRequest { Id = id };
 
             var response = await _mediator.Send(command);
+
+            if (response == null)
+                return NotFound();
 
             return Ok(response);
         }
@@ -58,27 +61,38 @@ namespace Stories.API.Controllers
         [HttpDelete("{id:guid}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            if (_service.Delete(id))
-                return Ok();
+            var command = new DeleteStoryByIdRequest { Id = id };
 
-            return NotFound();
+            var response = await _mediator.Send(command);
+
+            if (!response.IsSucceded)
+                return NotFound();
+
+            return Ok();
+                
         }
 
         [HttpPut("{id:guid}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult Put(Guid id, string title, string description, string department)
+        public async Task<IActionResult> Put(Guid id, string title, string description, string department)
         {
-            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(department))
+            var command = new UpdateStoryRequest { Id = id, Title = title, Description = description, Department = department };
+
+            var response = await _mediator.Send(command);
+
+            if (response == null)
+                return NotFound();
+
+            if (!response.Value)
                 return BadRequest();
 
-            if (_service.Update(id, title, description, department))
-                return Ok();
+            return Ok();
 
-            return NotFound();
+
         }
 
         [HttpPost("{id:guid}/vote")]

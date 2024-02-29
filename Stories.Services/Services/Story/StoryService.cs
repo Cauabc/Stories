@@ -21,15 +21,15 @@ public class StoryService(ApplicationDataContext context) : IStoryService
         return storyToCreate.Id;
     }
 
-    public bool Delete(Guid id)
+    public async Task<bool> Delete(Guid id)
     {
-        var itemToDelete = _context.Stories.FirstOrDefault(x => x.Id == id);
+        var itemToDelete = await _context.Stories.FirstOrDefaultAsync(x => x.Id == id);
 
         if (itemToDelete == null)
             return false;
 
         _context.Stories.Remove(itemToDelete);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         return true;
     }
@@ -55,25 +55,28 @@ public class StoryService(ApplicationDataContext context) : IStoryService
         return await _context.Stories.Select(s => new StoryDTO { Id = s.Id, Title = s.Title, Description = s.Description, Department = s.Department, Likes = s.Votes.Count(v => v.Upvote), Dislikes = s.Votes.Count(v => v.Upvote == false) }).FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public bool Update(Guid id, string title, string description, string department)
+    public async Task<bool?> Update(Guid id, string title, string description, string department)
     {
-        var itemToUpdate = _context.Stories.FirstOrDefault(x => x.Id == id);
+        if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(description) || string.IsNullOrEmpty(department))
+            return false;
+         
+        var itemToUpdate = await _context.Stories.FirstOrDefaultAsync(x => x.Id == id);
 
         if (itemToUpdate == null)
-            return false;
+            return null;
 
         itemToUpdate.Title = title;
         itemToUpdate.Description = description;
         itemToUpdate.Department = department;
 
         _context.Stories.Update(itemToUpdate);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
 
         return true;
     }
-    public void PostVote(Guid storyId, Guid accountId, bool upvote)
+    public async Task PostVote(Guid storyId, Guid accountId, bool upvote)
     {
         _context.Votes.Add(new VoteEntity { StoryId = storyId, AccountId = accountId, Upvote = upvote });
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 }
